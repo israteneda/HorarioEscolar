@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Horario Escolar</string>
+    <string name="horario">Horario</string>
 </resources>
