@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.israteneda.horarioescolar.models.Subject
+import com.israteneda.horarioescolar.models.Timetable
 
 class SubjectViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     RecyclerView.ViewHolder(inflater.inflate(R.layout.subject_card_view_item, parent, false)) {
@@ -21,11 +21,10 @@ class SubjectViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         mTeacherView = itemView.findViewById(R.id.tv_teacher)
     }
 
-    fun bind(subject: Subject) {
-        mInitTimeView?.text = subject.initTime
-        mEndTimeView?.text = subject.endTime
-        mNameSubjectView?.text = subject.name
-        mTeacherView?.text = subject.teacher
+    fun bind(timetable: Timetable) {
+        mNameSubjectView?.text = timetable.day
+        mInitTimeView?.text = timetable.startTime.toString()
+        mEndTimeView?.text = timetable.endTime.toString()
     }
 
 }

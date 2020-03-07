@@ -1,9 +1,12 @@
 package com.israteneda.horarioescolar
 
 import android.os.Bundle
+import android.widget.Toolbar
 import androidx.annotation.LayoutRes
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import kotlinx.android.synthetic.main.fragment_main.*
 
 abstract class SingleFragmentActivity: AppCompatActivity() {
 

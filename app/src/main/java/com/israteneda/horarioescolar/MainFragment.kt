@@ -4,20 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.israteneda.horarioescolar.models.Subject
+import com.israteneda.horarioescolar.models.Timetable
 import kotlinx.android.synthetic.main.fragment_main.*
+
 
 class MainFragment : Fragment() {
 
-    private val mSubjects = listOf(
-        Subject("07:00", "09:00", "Inteligencia Artificial II", "Ing. Luis Carrillo"),
-        Subject("07:00", "09:00", "Inteligencia Artificial II", "Ing. Luis Carrillo"),
-        Subject("07:00", "09:00", "Inteligencia Artificial II", "Ing. Luis Carrillo"),
-        Subject("07:00", "09:00", "Inteligencia Artificial II", "Ing. Luis Carrillo"),
-        Subject("07:00", "09:00", "Inteligencia Artificial II", "Ing. Luis Carrillo")
+    private val mTimetables = listOf(
+        Timetable("Lunes", 12.0, 13.0),
+        Timetable("Martes", 12.0, 13.0)
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +38,7 @@ class MainFragment : Fragment() {
             // RecyclerView behavior
             layoutManager = LinearLayoutManager(activity)
             // set the custom adapter to the RecyclerView
-            adapter = ListAdapter(mSubjects)
+            adapter = ListAdapter(mTimetables)
         }
     }
 
