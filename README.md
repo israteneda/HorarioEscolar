@@ -12,4 +12,4 @@
 
 ## Diagrama de Clases
 
-![diagrama_de_clases](https://raw.githubusercontent.com/israteneda/HorarioEscolar/master/HorarioEscolar.png | width=100px)
+<img src="https://raw.githubusercontent.com/israteneda/HorarioEscolar/master/HorarioEscolar.png" width="600" height="400" />
