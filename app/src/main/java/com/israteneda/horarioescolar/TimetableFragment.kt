@@ -1,17 +1,14 @@
 package com.israteneda.horarioescolar
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.israteneda.horarioescolar.models.Timetable
-import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.fragment_timetable.*
 
 
-class MainFragment : Fragment() {
+class TimetableFragment : Fragment() {
 
     private val mTimetables = listOf(
         Timetable("Lunes", 12.0, 13.0),
@@ -27,7 +24,7 @@ class MainFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.fragment_main, container, false)
+        inflater.inflate(R.layout.fragment_timetable, container, false)
 
 
     // Wait until your View is guaranteed not null to grab View elements
@@ -43,6 +40,6 @@ class MainFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance() = MainFragment()
+        fun newInstance() = TimetableFragment()
     }
 }
