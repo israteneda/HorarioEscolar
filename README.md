@@ -11,3 +11,5 @@
 * [Bottom Navigation with Kotlin](https://medium.com/@smarrerof/c%C3%B3mo-usar-la-bottomnavigationview-en-android-usando-kotlin-ae8961aae92e)
 
 ## Diagrama de Clases
+
+![diagrama_de_clases](https://raw.githubusercontent.com/israteneda/HorarioEscolar/master/HorarioEscolar.png | width=100px)
