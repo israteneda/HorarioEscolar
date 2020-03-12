@@ -5,6 +5,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 class MainActivity: AppCompatActivity() {
@@ -14,6 +15,9 @@ class MainActivity: AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val bottomNav: BottomNavigationView  = findViewById(R.id.bottom_navigation)
+        val fab: FloatingActionButton = findViewById(R.id.btn_floating);
+        openFragment(HomeFragment.newInstance())
+        fab.hide()
 
         bottomNav.setOnNavigationItemSelectedListener {
             item: MenuItem ->
@@ -21,21 +25,27 @@ class MainActivity: AppCompatActivity() {
                 R.id.nav_home -> {
                     val fragment = HomeFragment.newInstance()
                     openFragment(fragment)
+                    fab.hide()
                     true
                 }
                 R.id.nav_tasks -> {
                     val fragment = TaskFragment.newInstance()
                     openFragment(fragment)
+                    fab.setImageResource(R.drawable.ic_note_add_white_24dp)
+                    fab.show()
                     true
                 }
                 R.id.nav_timetable -> {
                     val fragment = TimetableFragment.newInstance()
                     openFragment(fragment)
+                    fab.setImageResource(R.drawable.ic_library_add_white_24dp)
+                    fab.show()
                     true
                 }
                 R.id.nav_profile -> {
                     val fragment = ProfileFragment.newInstance()
                     openFragment(fragment)
+                    fab.hide()
                     true
                 }
                 else -> false

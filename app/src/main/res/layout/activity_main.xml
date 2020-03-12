@@ -13,21 +13,16 @@
         android:layout_height="match_parent">
     </FrameLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fabSize="mini"
-            android:src="@drawable/ic_add_white_24dp"
-            app:elevation="10dp"
-            app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
-            app:layout_constraintLeft_toRightOf="@id/bottom_navigation"
-            app:layout_constraintRight_toLeftOf="@id/bottom_navigation"
-            app:layout_constraintTop_toBottomOf="@id/bottom_navigation"
-            />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_floating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/ic_note_add_white_24dp"
+        android:layout_above="@+id/bottom_navigation"
+        app:elevation="5dp" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"
@@ -35,9 +30,7 @@
             android:layout_height="wrap_content"
             android:background="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_alignParentBottom="true"
             app:menu="@menu/bottom_navigation" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>
