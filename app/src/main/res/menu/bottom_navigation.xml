@@ -4,22 +4,22 @@
 
     <item
         android:id="@+id/nav_home"
-        android:icon="@drawable/ic_home_gray_24dp"
+        android:icon="@drawable/ic_home"
         android:title="Inicio"/>
 
     <item
         android:id="@+id/nav_tasks"
-        android:icon="@drawable/ic_work_gray_24dp"
+        android:icon="@drawable/ic_work"
         android:title="Tareas"/>
 
     <item
         android:id="@+id/nav_timetable"
-        android:icon="@drawable/ic_timetable_gray_24dp"
+        android:icon="@drawable/ic_timetable"
         android:title="Horario"/>
 
     <item
         android:id="@+id/nav_news"
-        android:icon="@drawable/ic_news_gray_24dp"
+        android:icon="@drawable/ic_news"
         android:title="Noticias"/>
 
 </menu>

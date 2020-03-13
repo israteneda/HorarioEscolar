@@ -33,7 +33,7 @@ class MainActivity: AppCompatActivity() {
                 R.id.nav_tasks -> {
                     val fragment = TaskFragment.newInstance()
                     openFragment(fragment)
-                    fab.setImageResource(R.drawable.ic_note_add_white_24dp)
+                    fab.setImageResource(R.drawable.ic_note_add)
                     fab.show()
                     fab.setOnClickListener {
                         Toast.makeText(this, "Crear Tarea", Toast.LENGTH_LONG).show()
@@ -43,7 +43,7 @@ class MainActivity: AppCompatActivity() {
                 R.id.nav_timetable -> {
                     val fragment = TimetableFragment.newInstance()
                     openFragment(fragment)
-                    fab.setImageResource(R.drawable.ic_timetable_add_white_24dp)
+                    fab.setImageResource(R.drawable.ic_timetable_add)
                     fab.show()
                     fab.setOnClickListener {
                         val fragment = AddSubjectFragment.newInstance()

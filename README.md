@@ -11,11 +11,22 @@
 * [Room Android](https://developer.android.com/training/data-storage/room)
 * [Room Relations](https://medium.com/androiddevelopers/database-relations-with-room-544ab95e4542)
 
+## Librerías utilizadas
+
+* [Color Sheet](https://github.com/msasikanth/ColorSheet)
+
 ## Cómo Contribuir
 
 * Realiza un fork del projecto
 * Clona tu proyecto forkeado desde Android Studio
 * Crea una rama con tus cambios, y envía un pull request :)
+
+## TODO
+
+* Revisar los colores del tema Material Components y establecer los de la interfaz gráfica
+* Crear valores estándar (strings, values, etc) para usar en las vistas
+* Crear CRUD de materias
+* Conectar Firebase
 
 ## Diagrama de Clases
 
