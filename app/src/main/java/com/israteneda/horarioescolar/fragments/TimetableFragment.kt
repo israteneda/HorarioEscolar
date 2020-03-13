@@ -1,18 +1,20 @@
-package com.israteneda.horarioescolar
+package com.israteneda.horarioescolar.fragments
 
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.israteneda.horarioescolar.models.Timetable
+import com.israteneda.horarioescolar.ListAdapter
+import com.israteneda.horarioescolar.R
+import com.israteneda.horarioescolar.entities.Timetable
 import kotlinx.android.synthetic.main.fragment_timetable.*
 
 
 class TimetableFragment : Fragment() {
 
     private val mTimetables = listOf(
-        Timetable("Lunes", 12.0, 13.0),
-        Timetable("Martes", 12.0, 13.0)
+        Timetable(1,1, "Lunes", 13.0, 14.0),
+        Timetable(2, 1, "Miercoles", 13.0, 14.0)
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +42,7 @@ class TimetableFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance() = TimetableFragment()
+        fun newInstance() =
+            TimetableFragment()
     }
 }

@@ -2,10 +2,12 @@ package com.israteneda.horarioescolar
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.israteneda.horarioescolar.fragments.*
 
 
 class MainActivity: AppCompatActivity() {
@@ -33,17 +35,23 @@ class MainActivity: AppCompatActivity() {
                     openFragment(fragment)
                     fab.setImageResource(R.drawable.ic_note_add_white_24dp)
                     fab.show()
+                    fab.setOnClickListener {
+                        Toast.makeText(this, "Crear Tarea", Toast.LENGTH_LONG).show()
+                    }
                     true
                 }
                 R.id.nav_timetable -> {
                     val fragment = TimetableFragment.newInstance()
                     openFragment(fragment)
-                    fab.setImageResource(R.drawable.ic_library_add_white_24dp)
+                    fab.setImageResource(R.drawable.ic_timetable_add_white_24dp)
                     fab.show()
+                    fab.setOnClickListener {
+                        Toast.makeText(this, "Crear Horario", Toast.LENGTH_LONG).show()
+                    }
                     true
                 }
-                R.id.nav_profile -> {
-                    val fragment = ProfileFragment.newInstance()
+                R.id.nav_news -> {
+                    val fragment = NewsFragment.newInstance()
                     openFragment(fragment)
                     fab.hide()
                     true

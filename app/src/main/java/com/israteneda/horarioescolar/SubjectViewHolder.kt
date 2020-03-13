@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.israteneda.horarioescolar.models.Timetable
+import com.israteneda.horarioescolar.entities.Timetable
 
 class SubjectViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     RecyclerView.ViewHolder(inflater.inflate(R.layout.subject_card_view_item, parent, false)) {

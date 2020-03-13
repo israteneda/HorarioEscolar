@@ -3,7 +3,7 @@ package com.israteneda.horarioescolar
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.israteneda.horarioescolar.models.Timetable
+import com.israteneda.horarioescolar.entities.Timetable
 
 class ListAdapter(private val list: List<Timetable>)
     : RecyclerView.Adapter<SubjectViewHolder>() {

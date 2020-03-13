@@ -8,6 +8,8 @@
 * [Options Menu Fragment](https://www.youtube.com/watch?v=e-gvzEJf2S4)
 * [Bottom Navigation with Fragments](https://www.youtube.com/watch?v=tPV8xA7m-iw&t=32s)
 * [Bottom Navigation with Kotlin](https://medium.com/@smarrerof/c%C3%B3mo-usar-la-bottomnavigationview-en-android-usando-kotlin-ae8961aae92e)
+* [Room Android](https://developer.android.com/training/data-storage/room)
+* [Room Relations](https://medium.com/androiddevelopers/database-relations-with-room-544ab95e4542)
 
 ## Cómo Contribuir
 
