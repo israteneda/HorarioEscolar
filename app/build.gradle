@@ -3,6 +3,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+android.defaultConfig.vectorDrawables.useSupportLibrary = true
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"

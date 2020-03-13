@@ -46,7 +46,9 @@ class MainActivity: AppCompatActivity() {
                     fab.setImageResource(R.drawable.ic_timetable_add_white_24dp)
                     fab.show()
                     fab.setOnClickListener {
-                        Toast.makeText(this, "Crear Horario", Toast.LENGTH_LONG).show()
+                        val fragment = AddSubjectFragment.newInstance()
+                        openFragment(fragment)
+                        fab.hide()
                     }
                     true
                 }

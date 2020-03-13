@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.israteneda.horarioescolar.R
 
-class NewsFragment: Fragment() {
+class NewsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +23,6 @@ class NewsFragment: Fragment() {
     }
 
     companion object {
-        fun newInstance() =
-            NewsFragment()
+        fun newInstance() = NewsFragment()
     }
 }
