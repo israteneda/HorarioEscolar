@@ -7,15 +7,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.ImageViewCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.israteneda.horarioescolar.R
 import dev.sasikanth.colorsheet.ColorSheet
 import kotlinx.android.synthetic.main.fragment_add_subject.*
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class AddSubjectFragment : Fragment() {
 
@@ -51,6 +54,9 @@ class AddSubjectFragment : Fragment() {
         val colors = resources.getIntArray(R.array.colors)
         val startTime: TextView = view?.findViewById(R.id.et_start_time)
         val endTime: TextView = view?.findViewById(R.id.et_end_time)
+        val addDayBtn: MaterialButton = view?.findViewById(R.id.btn_add_day)
+        val mainContainer: LinearLayout = view?.findViewById(R.id.main_container)
+        val dayContainer: ConstraintLayout = view?.findViewById(R.id.day_container)
 
         leftArrow?.setOnClickListener {
             fragmentManager?.popBackStack()
@@ -111,7 +117,6 @@ class AddSubjectFragment : Fragment() {
 
         // Time picker
 
-
         startTime.setOnClickListener{
             val cal = Calendar.getInstance()
             val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
@@ -144,6 +149,19 @@ class AddSubjectFragment : Fragment() {
             ).show()
         }
 
+        // Add Day
 
+        addDayBtn.setOnClickListener {
+            addDay("Test")
+        }
+
+
+    }
+
+    fun addDay(textViewText:String){
+        val tv_dynamic = TextView(context)
+        tv_dynamic.textSize = 20f
+        tv_dynamic.text = textViewText
+        main_container.addView(tv_dynamic, main_container.childCount - 1)
     }
 }

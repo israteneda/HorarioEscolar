@@ -24,10 +24,13 @@
 
 ## TODO
 
+* Crear materia con un horario y mostrar en la pantalla Horario
+* Añadir por programación más horarios en una materia
 * Revisar los colores del tema Material Components y establecer los de la interfaz gráfica
 * Crear valores estándar (strings, values, etc) para usar en las vistas
 * Crear CRUD de materias y horarios
 * Conectar Firebase
+* Organizar layouts
 
 ## Diagrama de Clases
 
