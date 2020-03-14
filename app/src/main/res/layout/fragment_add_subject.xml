@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
@@ -51,6 +57,7 @@
         android:text="Nombre"
         android:textColor="@android:color/black"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/leftArrow" />
 
@@ -58,7 +65,7 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="30dp"
         android:text="Guardar"
         android:textColor="#828282"
         android:textSize="8sp"
@@ -80,6 +87,44 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_subject_name" />
+
+    <TextView
+        android:id="@+id/et_start_time"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="30dp"
+        android:background="#ECEFF1"
+        android:drawableLeft="@drawable/ic_start_time"
+        android:drawablePadding="10dp"
+        android:hint="Ingrese la hora inicial"
+        android:inputType="time"
+        android:padding="10dp"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_start_time" />
+
+    <TextView
+        android:id="@+id/et_end_time"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="30dp"
+        android:background="#ECEFF1"
+        android:drawableLeft="@drawable/ic_end_time"
+        android:drawablePadding="10dp"
+        android:hint="Ingrese la hora final"
+        android:inputType="textPersonName"
+        android:padding="10dp"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_end_time" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/colorSheet"
@@ -107,7 +152,7 @@
         app:srcCompat="@drawable/ic_circle" />
 
     <TextView
-        android:id="@+id/tv_subject_name2"
+        android:id="@+id/tv_day"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -115,8 +160,35 @@
         android:text="Día"
         android:textColor="@android:color/black"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_subject_name" />
+
+    <TextView
+        android:id="@+id/tv_start_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="100dp"
+        android:text="Hora de inicio"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_day" />
+
+    <TextView
+        android:id="@+id/tv_end_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="25dp"
+        android:text="Hora final"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_start_time" />
 
     <RadioGroup
         android:id="@+id/rg_days"
@@ -126,57 +198,83 @@
         android:layout_marginTop="15dp"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_subject_name2">
+        app:layout_constraintTop_toBottomOf="@+id/tv_day">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/bt_mondey"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="50dp"
+        <RadioButton
+            android:id="@+id/rb_monday"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/custom_button_background"
+            android:button="@android:color/transparent"
             android:text="L"
-            android:textColor="#828282"
-            android:textSize="12sp" />
+            android:textAlignment="center"
+            android:textColor="@color/radio_text_selector"
+            android:textStyle="bold" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/bt_tuesday"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="50dp"
+        <RadioButton
+            android:id="@+id/rb_tuesday"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
+            android:background="@drawable/custom_button_background"
+            android:button="@android:color/transparent"
             android:text="M"
-            android:textColor="#828282"
-            android:textSize="12sp" />
+            android:textAlignment="center"
+            android:layout_marginLeft="15dp"
+            android:textColor="@color/radio_text_selector"
+            android:textStyle="bold" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/bt_wednesday"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="50dp"
+        <RadioButton
+            android:id="@+id/rb_wednesday"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
+            android:background="@drawable/custom_button_background"
+            android:button="@android:color/transparent"
             android:text="Mi"
-            android:textColor="#828282"
-            android:textSize="12sp" />
+            android:textAlignment="center"
+            android:layout_marginLeft="15dp"
+            android:textColor="@color/radio_text_selector"
+            android:textStyle="bold" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/bt_thursday"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="50dp"
+        <RadioButton
+            android:id="@+id/rb_thursday"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
+            android:background="@drawable/custom_button_background"
+            android:button="@android:color/transparent"
             android:text="J"
-            android:textColor="#828282"
-            android:textSize="12sp" />
+            android:textAlignment="center"
+            android:layout_marginLeft="15dp"
+            android:textColor="@color/radio_text_selector"
+            android:textStyle="bold" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/bt_friday"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="50dp"
+        <RadioButton
+            android:id="@+id/rb_friday"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
+            android:background="@drawable/custom_button_background"
+            android:button="@android:color/transparent"
             android:text="V"
-            android:textColor="#828282"
-            android:textSize="12sp" />
+            android:textAlignment="center"
+            android:layout_marginLeft="15dp"
+            android:textColor="@color/radio_text_selector"
+            android:textStyle="bold" />
 
     </RadioGroup>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_add_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:drawableLeft="@drawable/ic_add"
+        android:text="Añadir día"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_end_time" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

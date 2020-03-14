@@ -2,6 +2,7 @@ package com.israteneda.horarioescolar
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -36,7 +37,7 @@ class MainActivity: AppCompatActivity() {
                     fab.setImageResource(R.drawable.ic_note_add)
                     fab.show()
                     fab.setOnClickListener {
-                        Toast.makeText(this, "Crear Tarea", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, "Crear Tarea", Toast.LENGTH_SHORT).show()
                     }
                     true
                 }

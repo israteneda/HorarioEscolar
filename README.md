@@ -10,6 +10,7 @@
 * [Bottom Navigation with Kotlin](https://medium.com/@smarrerof/c%C3%B3mo-usar-la-bottomnavigationview-en-android-usando-kotlin-ae8961aae92e)
 * [Room Android](https://developer.android.com/training/data-storage/room)
 * [Room Relations](https://medium.com/androiddevelopers/database-relations-with-room-544ab95e4542)
+* [Custom Radio Button](https://stackoverflow.com/questions/19163628/adding-custom-radio-buttons-in-android)
 
 ## Librerías utilizadas
 
@@ -25,7 +26,7 @@
 
 * Revisar los colores del tema Material Components y establecer los de la interfaz gráfica
 * Crear valores estándar (strings, values, etc) para usar en las vistas
-* Crear CRUD de materias
+* Crear CRUD de materias y horarios
 * Conectar Firebase
 
 ## Diagrama de Clases
