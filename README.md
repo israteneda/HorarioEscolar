@@ -26,7 +26,7 @@
 ## TODO
 
 ✅ Construir el template del layout para agregar Día del horario\
-✅ Añadir por programación más horarios en una materia\  
+✅ Añadir por programación más horarios en una materia  
 📌 Añadir ids a los elementos dinámicos en `AddSubjectFRagment.kt`\
 📌 Crear materia con un horario y mostrar en la pantalla Horario\
 📌 Revisar los colores del tema Material Components y establecer los de la interfaz gráfica\
@@ -34,7 +34,7 @@
 📌 Crear CRUD de materias y horarios\
 📌 Conectar Firebase\
 📌 Organizar layouts\
-📌 Refactorizar `AddSubjectFRagment.kt`\
+📌 Refactorizar `AddSubjectFRagment.kt`
 
 ## Diagrama de Clases
 

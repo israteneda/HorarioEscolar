@@ -22,6 +22,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/leftArrow"
+            android:layout_width="35dp"
+            android:layout_height="75dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="3dp"
+            android:contentDescription="Left Arrow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_arrow_left" />
+
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
@@ -36,39 +47,39 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"></TextView>
 
-        <ImageView
-            android:id="@+id/leftArrow"
-            android:layout_width="35dp"
-            android:layout_height="75dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="3dp"
-            android:contentDescription="Left Arrow"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_arrow_left" />
-
-        <ImageView
-            android:id="@+id/iv_save"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/save_container"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:contentDescription="Save"
+            android:layout_height="match_parent"
+            android:padding="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/save" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="Guardar"
-            android:textColor="#828282"
-            android:textSize="8sp"
-            app:layout_constraintEnd_toEndOf="@+id/iv_save"
-            app:layout_constraintStart_toStartOf="@+id/iv_save"
-            app:layout_constraintTop_toTopOf="@+id/iv_save" />
+            <ImageView
+                android:id="@+id/iv_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="Save"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/save" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="Guardar"
+                android:textColor="#828282"
+                android:textSize="8sp"
+                app:layout_constraintEnd_toEndOf="@+id/iv_save"
+                app:layout_constraintStart_toStartOf="@+id/iv_save"
+                app:layout_constraintTop_toTopOf="@+id/iv_save" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -92,7 +103,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/et_name_subject"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginStart="30dp"
@@ -114,7 +125,7 @@
             android:layout_marginTop="16dp"
             android:tint="#ECEFF1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText"
+            app:layout_constraintTop_toBottomOf="@+id/et_name_subject"
             app:srcCompat="@drawable/ic_circle" />
 
         <com.google.android.material.button.MaterialButton
@@ -129,7 +140,7 @@
             android:text="Seleccionar Color"
             app:cornerRadius="18dp"
             app:layout_constraintStart_toEndOf="@+id/iv_selected_color"
-            app:layout_constraintTop_toBottomOf="@+id/editText" />
+            app:layout_constraintTop_toBottomOf="@+id/et_name_subject" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -237,7 +248,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/et_start_time"
+            android:id="@+id/tv_start_time_picker"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginStart="30dp"
@@ -263,7 +274,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/et_end_time"
+            android:id="@+id/tv_end_time_picker"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginStart="30dp"

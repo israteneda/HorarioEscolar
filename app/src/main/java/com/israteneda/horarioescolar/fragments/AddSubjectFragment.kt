@@ -7,7 +7,6 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.*
-import android.view.View.OnTouchListener
 import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.core.view.setPadding
@@ -16,6 +15,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import com.israteneda.horarioescolar.R
 import dev.sasikanth.colorsheet.ColorSheet
 import kotlinx.android.synthetic.main.fragment_add_subject.*
@@ -55,11 +55,9 @@ class AddSubjectFragment : Fragment() {
         val leftArrow = view?.findViewById(R.id.leftArrow) as ImageView?
         val selectedColorImageView = view?.findViewById(R.id.iv_selected_color) as ImageView
         val colors = resources.getIntArray(R.array.colors)
-        val startTime: TextView = view?.findViewById(R.id.et_start_time)
-        val endTime: TextView = view?.findViewById(R.id.et_end_time)
+        val startTime: TextView = view?.findViewById(R.id.tv_start_time_picker)
+        val endTime: TextView = view?.findViewById(R.id.tv_end_time_picker)
         val addDayBtn: MaterialButton = view?.findViewById(R.id.btn_add_day)
-        val mainContainer: LinearLayout = view?.findViewById(R.id.main_container)
-        val dayContainer: LinearLayout = view?.findViewById(R.id.day_container)
 
         leftArrow?.setOnClickListener {
             fragmentManager?.popBackStack()
@@ -69,9 +67,7 @@ class AddSubjectFragment : Fragment() {
         }
 
         // Color Sheet
-
-        selectedColor = savedInstanceState?.getInt(COLOR_SELECTED) ?: colors.first()
-
+//        selectedColor = savedInstanceState?.getInt(COLOR_SELECTED) ?: colors.first()
         noColorOption = savedInstanceState?.getBoolean(NO_COLOR_OPTION) ?: false
 
         colorSheet.setOnClickListener {
@@ -91,6 +87,8 @@ class AddSubjectFragment : Fragment() {
                 .show(activity!!.supportFragmentManager)
         }
 
+        // ImageView Color
+
         iv_selected_color.setOnClickListener{
             ColorSheet().cornerRadius(8)
                 .colorPicker(
@@ -108,7 +106,7 @@ class AddSubjectFragment : Fragment() {
                 .show(activity!!.supportFragmentManager)
         }
 
-        // Radio Group
+        // Day Radio Group
 
         rg_days.setOnCheckedChangeListener { group, checkedId ->
                 val button: RadioButton = view!!.findViewById(checkedId)
@@ -118,7 +116,7 @@ class AddSubjectFragment : Fragment() {
                 println("click")
         }
 
-        // Time picker
+        // Time pickers
 
         startTime.setOnClickListener{
             val cal = Calendar.getInstance()
@@ -156,6 +154,35 @@ class AddSubjectFragment : Fragment() {
 
         addDayBtn.setOnClickListener {
             addDay()
+        }
+
+        // Save Subject
+
+        save_container.setOnClickListener {
+            if (et_name_subject.text.equals("") or et_name_subject.text.isEmpty()) {
+                et_name_subject.setError("Ingrese el nombre de la materia")
+            } else if (et_name_subject.text.count() < 3) {
+                et_name_subject.setError("El nombre de la materia debe contener mínimo 3 letras")
+            }
+
+            if (selectedColor == ColorSheet.NO_COLOR){
+                colorSheet.setError("")
+            } else colorSheet.setError(null)
+
+            if (rg_days.checkedRadioButtonId == -1) {
+                tv_day.setError("")
+            } else tv_day.setError(null)
+
+
+            if (startTime.text.equals("") or startTime.text.isEmpty()){
+                startTime.setError("")
+            } else startTime.setError(null)
+
+            if (endTime.text.equals("") or endTime.text.isEmpty()){
+                endTime.setError("")
+            } else endTime.setError(null)
+
+//            Snackbar.make(view, errorString, Snackbar.LENGTH_SHORT).show()
         }
 
 

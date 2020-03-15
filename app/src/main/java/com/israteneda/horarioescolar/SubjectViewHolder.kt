@@ -16,7 +16,7 @@ class SubjectViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
 
     init {
         mInitTimeView = itemView.findViewById(R.id.tv_init_time)
-        mEndTimeView = itemView.findViewById(R.id.tv_end_time)
+        mEndTimeView = itemView.findViewById(R.id.tv_end_time_picker)
         mNameSubjectView = itemView.findViewById(R.id.tv_subject_name)
         mTeacherView = itemView.findViewById(R.id.tv_teacher)
     }
