@@ -4,7 +4,9 @@ import android.app.TimePickerDialog
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Typeface
+import android.opengl.Visibility
 import android.os.Bundle
+import android.util.Log
 import android.util.TypedValue
 import android.view.*
 import android.widget.*
@@ -19,14 +21,24 @@ import com.google.android.material.snackbar.Snackbar
 import com.israteneda.horarioescolar.R
 import dev.sasikanth.colorsheet.ColorSheet
 import kotlinx.android.synthetic.main.fragment_add_subject.*
+import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.*
 
 
 class AddSubjectFragment : Fragment() {
 
+    data class TextViewRadioGroup(
+        val tv: TextView,
+        val rg: RadioGroup
+    )
+
+    var addDayBtn: MaterialButton? = null;
+    var listOfTextViewRadioGroup = arrayListOf<TextViewRadioGroup>()
+    var listOfTextViews = arrayListOf<TextView>()
+
     companion object {
-        private const val COLOR_SELECTED = "selectedColor"
+//        private const val COLOR_SELECTED = "selectedColor"
         private const val NO_COLOR_OPTION = "noColorOption"
         fun newInstance() = AddSubjectFragment()
     }
@@ -57,7 +69,7 @@ class AddSubjectFragment : Fragment() {
         val colors = resources.getIntArray(R.array.colors)
         val startTime: TextView = view?.findViewById(R.id.tv_start_time_picker)
         val endTime: TextView = view?.findViewById(R.id.tv_end_time_picker)
-        val addDayBtn: MaterialButton = view?.findViewById(R.id.btn_add_day)
+        addDayBtn = view?.findViewById(R.id.btn_add_day)
 
         leftArrow?.setOnClickListener {
             fragmentManager?.popBackStack()
@@ -67,7 +79,7 @@ class AddSubjectFragment : Fragment() {
         }
 
         // Color Sheet
-//        selectedColor = savedInstanceState?.getInt(COLOR_SELECTED) ?: colors.first()
+        // selectedColor = savedInstanceState?.getInt(COLOR_SELECTED) ?: colors.first()
         noColorOption = savedInstanceState?.getBoolean(NO_COLOR_OPTION) ?: false
 
         colorSheet.setOnClickListener {
@@ -152,8 +164,12 @@ class AddSubjectFragment : Fragment() {
 
         // Add Day
 
-        addDayBtn.setOnClickListener {
-            addDay()
+        addDayBtn?.setOnClickListener {
+            if (listOfTextViewRadioGroup.size < 4){
+                addDay()
+            } else if (listOfTextViewRadioGroup.size == 4) {
+                addDayBtn?.visibility = View.GONE
+            }
         }
 
         // Save Subject
@@ -182,6 +198,21 @@ class AddSubjectFragment : Fragment() {
                 endTime.setError("")
             } else endTime.setError(null)
 
+
+            listOfTextViews.forEach{ tv ->
+                if (tv.text.equals("") or tv.text.isEmpty()){
+                    tv.setError("")
+                } else tv.setError(null)
+                Log.i(tag, tv.text.toString())
+            }
+
+            listOfTextViewRadioGroup.forEach{ tvRadioGroup ->
+                if (tvRadioGroup.rg.checkedRadioButtonId == -1) {
+                    tvRadioGroup.tv.setError("")
+                } else tvRadioGroup.tv.setError(null)
+                Log.i(tag, tvRadioGroup.tv.text.toString())
+            }
+
 //            Snackbar.make(view, errorString, Snackbar.LENGTH_SHORT).show()
         }
 
@@ -195,8 +226,8 @@ class AddSubjectFragment : Fragment() {
         // Linear Layout Container of Day
 
         val layout_params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT)
-        val layout_id = View.generateViewId()
         val layout_day = LinearLayout(context)
+        val layout_id = View.generateViewId()
         layout_day.id = layout_id
         layout_day.orientation = LinearLayout.VERTICAL
         layout_day.layoutParams = layout_params
@@ -207,20 +238,26 @@ class AddSubjectFragment : Fragment() {
         val iv_close_params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT)
         iv_close.isClickable = true
         iv_close_params.gravity = Gravity.RIGHT
-        iv_close_params.setMargins(0, (8*dp).toInt(), (30*dp).toInt(), 0)
+        iv_close_params.setMargins(0, (10*dp).toInt(), (30*dp).toInt(), 0)
         iv_close.layoutParams = iv_close_params
         iv_close.setBackgroundResource(R.drawable.ic_close)
 
         iv_close.setOnClickListener {
             main_container.removeView(layout_day)
+            if (listOfTextViewRadioGroup.size == 4) {
+                addDayBtn?.visibility = View.VISIBLE
+            }
         }
 
         // Day TextView
 
         val tv_day = TextView(context)
+        val tv_day_id = View.generateViewId()
+        tv_day.id = tv_day_id
         val tv_day_params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT)
         tv_day_params.setMargins((30*dp).toInt(), 0, 0, 0)
         tv_day.layoutParams = tv_day_params
+        tv_day.compoundDrawablePadding = (10*dp).toInt()
         tv_day.setTypeface(null, Typeface.BOLD)
         tv_day.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18.toFloat())
         tv_day.setTextColor(Color.BLACK)
@@ -231,11 +268,15 @@ class AddSubjectFragment : Fragment() {
         val days = arrayOf("L", "M", "Mi", "J", "V")
 
         val rg_days = RadioGroup(context)
+        val rg_days_id = View.generateViewId()
+        rg_days.id = rg_days_id
         rg_days.orientation = RadioGroup.HORIZONTAL
         val rg_days_params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT)
         rg_days_params.setMargins((15*dp).toInt(), (15*dp).toInt() , 0, 0)
         rg_days.layoutParams = rg_days_params
 
+        val textViewRadioGroup = TextViewRadioGroup(tv_day, rg_days)
+        listOfTextViewRadioGroup.add(textViewRadioGroup)
 
         val rb_day_params = LinearLayout.LayoutParams((48*dp).toInt(), (48*dp).toInt())
         rb_day_params.setMargins((15*dp).toInt(), 0, 0, 0)
@@ -243,6 +284,8 @@ class AddSubjectFragment : Fragment() {
         val rb_day = arrayOfNulls<RadioButton>(5)
         for (i in 0..4) {
             rb_day[i] = RadioButton(context)
+            val rb_day_id = View.generateViewId()
+            rb_day[i]?.id = rb_day_id
             rb_day[i]?.layoutParams = rb_day_params
             rb_day[i]?.textAlignment = View.TEXT_ALIGNMENT_CENTER
             rb_day[i]?.setTypeface(null, Typeface.BOLD)
@@ -276,6 +319,8 @@ class AddSubjectFragment : Fragment() {
         // Start Time TextView Time Picker
 
         val start_time_picker = TextView(context)
+        val start_time_picker_id = View.generateViewId()
+        start_time_picker.id = start_time_picker_id
         val start_time_picker_params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (50*dp).toInt())
         start_time_picker_params.setMargins((30*dp).toInt(), (15*dp).toInt() , (30*dp).toInt(), 0)
         start_time_picker.layoutParams = start_time_picker_params
@@ -302,6 +347,8 @@ class AddSubjectFragment : Fragment() {
             ).show()
         }
 
+        listOfTextViews.add(start_time_picker)
+
         // End Time TextView
 
         val tv_end_time = TextView(context)
@@ -316,6 +363,8 @@ class AddSubjectFragment : Fragment() {
         // End Time TextView Time Picker
 
         val end_time_picker = TextView(context)
+        val end_time_picker_id = View.generateViewId()
+        end_time_picker.id = end_time_picker_id
         val end_time_picker_params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (50*dp).toInt())
         end_time_picker_params.setMargins((30*dp).toInt(), (15*dp).toInt() , (30*dp).toInt(), 0)
         end_time_picker.layoutParams = end_time_picker_params
@@ -341,6 +390,8 @@ class AddSubjectFragment : Fragment() {
                 false
             ).show()
         }
+
+        listOfTextViews.add(end_time_picker)
 
         // Divider
 

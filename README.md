@@ -34,7 +34,8 @@
 📌 Crear CRUD de materias y horarios\
 📌 Conectar Firebase\
 📌 Organizar layouts\
-📌 Refactorizar `AddSubjectFRagment.kt`
+📌 Refactorizar `AddSubjectFRagment.kt`\
+📌 Añadir notificaciones locales de las clases
 
 ## Diagrama de Clases
 
