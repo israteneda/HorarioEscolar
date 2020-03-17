@@ -4,11 +4,22 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(tableName = "Period")
 data class Period(
-    @PrimaryKey val periodId: Long,
-    @ColumnInfo(name = "period_name") val periodName: String,
-    @ColumnInfo(name = "institution") val institution: String,
-    @ColumnInfo(name = "start_date") val startDate: String,
-    @ColumnInfo(name = "end_date") val endDate: String
+
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    val periodId: Long,
+
+    @ColumnInfo(name = "period_name")
+    val periodName: String,
+
+    val institution: String,
+
+    @ColumnInfo(name = "start_date")
+    val startDate: String,
+
+    @ColumnInfo(name = "end_date")
+    val endDate: String
+
 )

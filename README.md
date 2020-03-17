@@ -12,6 +12,9 @@
 * [Room Relations](https://medium.com/androiddevelopers/database-relations-with-room-544ab95e4542)
 * [Custom Radio Button](https://stackoverflow.com/questions/19163628/adding-custom-radio-buttons-in-android)
 * [Create RadioGroup Programmatically](https://stackoverflow.com/questions/19929295/creating-radiogroup-programmatically)
+* [Room Tips and Tricks](https://spin.atomicobject.com/2019/04/01/android-room-tips/)
+* [One to many relation in room](https://stackoverflow.com/questions/48443760/one-to-many-relation-in-room)
+* [Android Room Basic Example](https://www.youtube.com/watch?v=RCLNkSIQQaw)
 
 ## Librerías utilizadas
 

@@ -2,25 +2,39 @@ package com.israteneda.horarioescolar
 
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.israteneda.horarioescolar.entities.Subject
 import com.israteneda.horarioescolar.fragments.*
 
 
 class MainActivity: AppCompatActivity() {
 
+    private lateinit var db: AppDatabase
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // Room Database
+
+        db = AppDatabase.getAppDatabase(this)
+
+        db.subjectDao().insertSubject(Subject(0,"Matemáticas", "#FFFFFF"))
+
+        Toast.makeText(applicationContext, db.subjectDao().getAll().toString(), Toast.LENGTH_SHORT).show()
+
+        // UI Elements
 
         val bottomNav: BottomNavigationView  = findViewById(R.id.bottom_navigation)
         val fab: FloatingActionButton = findViewById(R.id.btn_floating);
         openFragment(HomeFragment.newInstance())
         fab.hide()
+
+        // Bottom Navigation
 
         bottomNav.setOnNavigationItemSelectedListener {
             item: MenuItem ->
@@ -53,8 +67,8 @@ class MainActivity: AppCompatActivity() {
                     }
                     true
                 }
-                R.id.nav_news -> {
-                    val fragment = NewsFragment.newInstance()
+                R.id.nav_profile -> {
+                    val fragment = ProfileFragment.newInstance()
                     openFragment(fragment)
                     fab.hide()
                     true

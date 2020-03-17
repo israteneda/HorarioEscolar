@@ -24,6 +24,7 @@ import kotlinx.android.synthetic.main.fragment_add_subject.*
 import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.HashMap
 
 
 class AddSubjectFragment : Fragment() {
@@ -31,6 +32,14 @@ class AddSubjectFragment : Fragment() {
     data class TextViewRadioGroup(
         val tv: TextView,
         val rg: RadioGroup
+    )
+
+    val days:HashMap<Int, String> = hashMapOf(
+        0 to "LUNES",
+        1 to "MARTES",
+        2 to "MIÉRCOLES",
+        3 to "JUEVES",
+        4 to "VIERNES"
     )
 
     var addDayBtn: MaterialButton? = null;
@@ -175,6 +184,7 @@ class AddSubjectFragment : Fragment() {
         // Save Subject
 
         save_container.setOnClickListener {
+
             if (et_name_subject.text.equals("") or et_name_subject.text.isEmpty()) {
                 et_name_subject.setError("Ingrese el nombre de la materia")
             } else if (et_name_subject.text.count() < 3) {
@@ -185,9 +195,15 @@ class AddSubjectFragment : Fragment() {
                 colorSheet.setError("")
             } else colorSheet.setError(null)
 
-            if (rg_days.checkedRadioButtonId == -1) {
+            var id: Int = rg_days.checkedRadioButtonId
+            if ( id == -1) {
                 tv_day.setError("")
-            } else tv_day.setError(null)
+            } else {
+                var radio:RadioButton = view?.findViewById(id)
+                var index = rg_days.indexOfChild(radio)
+                Log.i(tag, index.toString())
+                tv_day.setError(null)
+            }
 
 
             if (startTime.text.equals("") or startTime.text.isEmpty()){
@@ -207,10 +223,15 @@ class AddSubjectFragment : Fragment() {
             }
 
             listOfTextViewRadioGroup.forEach{ tvRadioGroup ->
-                if (tvRadioGroup.rg.checkedRadioButtonId == -1) {
+                var rgId: Int = tvRadioGroup.rg.checkedRadioButtonId
+                if (rgId == -1) {
                     tvRadioGroup.tv.setError("")
-                } else tvRadioGroup.tv.setError(null)
-                Log.i(tag, tvRadioGroup.tv.text.toString())
+                } else {
+                    var radio:RadioButton = view?.findViewById(rgId)
+                    var index = tvRadioGroup.rg.indexOfChild(radio)
+                    Log.i(tag, index.toString())
+                    tvRadioGroup.tv.setError(null)
+                }
             }
 
 //            Snackbar.make(view, errorString, Snackbar.LENGTH_SHORT).show()

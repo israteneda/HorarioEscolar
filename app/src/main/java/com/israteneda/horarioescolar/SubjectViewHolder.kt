@@ -22,7 +22,7 @@ class SubjectViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     }
 
     fun bind(timetable: Timetable) {
-        mNameSubjectView?.text = timetable.day
+        mNameSubjectView?.text = timetable.day.name.toString()
         mInitTimeView?.text = timetable.startTime.toString()
         mEndTimeView?.text = timetable.endTime.toString()
     }

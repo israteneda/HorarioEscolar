@@ -1,14 +1,37 @@
 package com.israteneda.horarioescolar.entities
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
+import java.sql.Time
+import java.time.LocalDate
 
-@Entity
+@Entity(
+    tableName = "Timetable",
+    foreignKeys = arrayOf(
+        ForeignKey(
+            entity = Subject::class,
+            parentColumns = arrayOf("id"),
+            childColumns = arrayOf("subject_id"),
+            onDelete = ForeignKey.CASCADE
+        )
+    )
+)
+
 data class Timetable(
-    @PrimaryKey val timetableId: Long,
-    @ColumnInfo(name = "subject") val timetableSubjectId: Long,
-    @ColumnInfo(name = "day") val day: String,
-    @ColumnInfo(name = "start_time") val startTime: Double,
-    @ColumnInfo(name = "end_time") val endTime: Double
+
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    val timetableId: Long,
+
+    @ColumnInfo(name = "subject_id")
+    val subjectId: Long,
+
+    @Embedded
+    val day: Day,
+
+    @ColumnInfo(name = "start_time")
+    val startTime: String,
+
+    @ColumnInfo(name = "end_time")
+    val endTime: String
+
 )
