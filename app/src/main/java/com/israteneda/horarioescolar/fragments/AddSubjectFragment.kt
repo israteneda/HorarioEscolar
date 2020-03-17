@@ -4,53 +4,49 @@ import android.app.TimePickerDialog
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Typeface
-import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
 import android.view.*
 import android.widget.*
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.view.setPadding
 import androidx.core.widget.ImageViewCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
+import com.israteneda.horarioescolar.AppDatabase
 import com.israteneda.horarioescolar.R
+import com.israteneda.horarioescolar.entities.Day
+import com.israteneda.horarioescolar.entities.Subject
+import com.israteneda.horarioescolar.entities.Timetable
 import dev.sasikanth.colorsheet.ColorSheet
 import kotlinx.android.synthetic.main.fragment_add_subject.*
 import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.HashMap
 
 
 class AddSubjectFragment : Fragment() {
 
-    data class TextViewRadioGroup(
-        val tv: TextView,
-        val rg: RadioGroup
-    )
-
-    val days:HashMap<Int, String> = hashMapOf(
-        0 to "LUNES",
-        1 to "MARTES",
-        2 to "MIÉRCOLES",
-        3 to "JUEVES",
-        4 to "VIERNES"
-    )
-
-    var addDayBtn: MaterialButton? = null;
-    var listOfTextViewRadioGroup = arrayListOf<TextViewRadioGroup>()
-    var listOfTextViews = arrayListOf<TextView>()
-
     companion object {
-//        private const val COLOR_SELECTED = "selectedColor"
+        //        private const val COLOR_SELECTED = "selectedColor"
         private const val NO_COLOR_OPTION = "noColorOption"
         fun newInstance() = AddSubjectFragment()
     }
+
+    data class TimetableUI(
+        val tv_day: TextView,
+        val rg_days: RadioGroup,
+        val tv_start_time: TextView,
+        val tv_end_time: TextView
+    )
+
+    private lateinit var db: AppDatabase
+    var addTimetableBtn: MaterialButton? = null;
+    var listOfTimetableUI = arrayListOf<TimetableUI>()
 
     private var selectedColor: Int = ColorSheet.NO_COLOR
     private var noColorOption = false
@@ -72,13 +68,19 @@ class AddSubjectFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Database
+
+        db = AppDatabase.getAppDatabase(context!!.applicationContext)
+
+        // UI Elements
+
         val bottomNav: BottomNavigationView = activity!!.findViewById(R.id.bottom_navigation)
         val leftArrow = view?.findViewById(R.id.leftArrow) as ImageView?
         val selectedColorImageView = view?.findViewById(R.id.iv_selected_color) as ImageView
         val colors = resources.getIntArray(R.array.colors)
         val startTime: TextView = view?.findViewById(R.id.tv_start_time_picker)
         val endTime: TextView = view?.findViewById(R.id.tv_end_time_picker)
-        addDayBtn = view?.findViewById(R.id.btn_add_day)
+        addTimetableBtn = view?.findViewById(R.id.btn_add_timetable)
 
         leftArrow?.setOnClickListener {
             fragmentManager?.popBackStack()
@@ -173,64 +175,99 @@ class AddSubjectFragment : Fragment() {
 
         // Add Day
 
-        addDayBtn?.setOnClickListener {
-            if (listOfTextViewRadioGroup.size < 4){
-                addDay()
-            } else if (listOfTextViewRadioGroup.size == 4) {
-                addDayBtn?.visibility = View.GONE
+        addTimetableBtn?.setOnClickListener {
+            if (listOfTimetableUI.size < 4){
+                addTimetable()
+            } else if (listOfTimetableUI.size == 4) {
+                addTimetableBtn?.visibility = View.GONE
             }
         }
+
+        listOfTimetableUI.add(TimetableUI(tv_day, rg_days, startTime, endTime))
 
         // Save Subject
 
         save_container.setOnClickListener {
 
+            // Subject validation
+
+            var validatedSubject = false
+            var validatedColor = false
+
             if (et_name_subject.text.equals("") or et_name_subject.text.isEmpty()) {
                 et_name_subject.setError("Ingrese el nombre de la materia")
             } else if (et_name_subject.text.count() < 3) {
                 et_name_subject.setError("El nombre de la materia debe contener mínimo 3 letras")
-            }
+            } else validatedSubject = true
 
             if (selectedColor == ColorSheet.NO_COLOR){
                 colorSheet.setError("")
-            } else colorSheet.setError(null)
-
-            var id: Int = rg_days.checkedRadioButtonId
-            if ( id == -1) {
-                tv_day.setError("")
             } else {
-                var radio:RadioButton = view?.findViewById(id)
-                var index = rg_days.indexOfChild(radio)
-                Log.i(tag, index.toString())
-                tv_day.setError(null)
+                colorSheet.setError(null)
+                validatedColor = true
             }
 
+            // List of timetables validation
+            var listOfIndex = arrayListOf<Int>()
+            var listOfValidatedDay = arrayListOf<Boolean>()
+            var listOfValidatedStartTime = arrayListOf<Boolean>()
+            var listOfValidatedEndTime = arrayListOf<Boolean>()
 
-            if (startTime.text.equals("") or startTime.text.isEmpty()){
-                startTime.setError("")
-            } else startTime.setError(null)
+            listOfTimetableUI.forEach{ timetableUI ->
 
-            if (endTime.text.equals("") or endTime.text.isEmpty()){
-                endTime.setError("")
-            } else endTime.setError(null)
+                var validatedDay = false
+                var validatedStartTime = false
+                var validatedEndTime = false
 
-
-            listOfTextViews.forEach{ tv ->
-                if (tv.text.equals("") or tv.text.isEmpty()){
-                    tv.setError("")
-                } else tv.setError(null)
-                Log.i(tag, tv.text.toString())
-            }
-
-            listOfTextViewRadioGroup.forEach{ tvRadioGroup ->
-                var rgId: Int = tvRadioGroup.rg.checkedRadioButtonId
+                var rgId: Int = timetableUI.rg_days.checkedRadioButtonId
                 if (rgId == -1) {
-                    tvRadioGroup.tv.setError("")
+                    timetableUI.tv_day.setError("")
                 } else {
-                    var radio:RadioButton = view?.findViewById(rgId)
-                    var index = tvRadioGroup.rg.indexOfChild(radio)
+                    var radioBtn:RadioButton = view?.findViewById(rgId)
+                    var index = timetableUI.rg_days.indexOfChild(radioBtn)
+                    listOfIndex.add(index)
                     Log.i(tag, index.toString())
-                    tvRadioGroup.tv.setError(null)
+                    validatedDay = true
+                    timetableUI.tv_day.setError(null)
+                }
+                listOfValidatedDay.add(validatedDay)
+
+                if (timetableUI.tv_start_time.text.equals("") or timetableUI.tv_start_time.text.isEmpty()){
+                    timetableUI.tv_start_time.setError("")
+                } else {
+                    validatedStartTime = true
+                    timetableUI.tv_start_time.setError(null)
+                }
+                listOfValidatedStartTime.add(validatedStartTime)
+
+                if (timetableUI.tv_end_time.text.equals("") or timetableUI.tv_end_time.text.isEmpty()){
+                    timetableUI.tv_end_time.setError("")
+                } else {
+                    validatedEndTime = true
+                    timetableUI.tv_end_time.setError(null)
+                }
+                listOfValidatedEndTime.add(validatedEndTime)
+
+
+                Log.i(tag, timetableUI.tv_start_time.text.toString())
+            }
+
+            // Save on database
+
+            if (validatedColor and validatedSubject) {
+                if (!listOfValidatedDay.contains(false) and !listOfValidatedStartTime.contains(false) and !listOfValidatedEndTime.contains(false)) {
+                    var subjectId = db.subjectDao().insert(Subject(0, et_name_subject.text.toString(), selectedColor))
+                    for (i in 0..(listOfTimetableUI.size - 1)) {
+                        db.timetableDao().insert(Timetable(
+                            0,
+                            subjectId,
+                            Day.days.get(listOfIndex.get(i)),
+                            listOfTimetableUI.get(i).tv_start_time.text.toString(),
+                            listOfTimetableUI.get(i).tv_end_time.text.toString()
+                        ))
+                    }
+                    Toast.makeText(context, "Materia Creada", Toast.LENGTH_LONG).show()
+                    Log.i(tag, db.subjectDao().getSubjectWithTimetables(subjectId).toString())
                 }
             }
 
@@ -240,35 +277,18 @@ class AddSubjectFragment : Fragment() {
 
     }
 
-    fun addDay(){
+    fun addTimetable(){
 
         val dp = context!!.resources.displayMetrics.density
 
-        // Linear Layout Container of Day
+        // Linear Layout Container of Timetable
 
         val layout_params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT)
-        val layout_day = LinearLayout(context)
+        val layout_timetable = LinearLayout(context)
         val layout_id = View.generateViewId()
-        layout_day.id = layout_id
-        layout_day.orientation = LinearLayout.VERTICAL
-        layout_day.layoutParams = layout_params
-
-        // ImageView Close
-
-        val iv_close = ImageView(context)
-        val iv_close_params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT)
-        iv_close.isClickable = true
-        iv_close_params.gravity = Gravity.RIGHT
-        iv_close_params.setMargins(0, (10*dp).toInt(), (30*dp).toInt(), 0)
-        iv_close.layoutParams = iv_close_params
-        iv_close.setBackgroundResource(R.drawable.ic_close)
-
-        iv_close.setOnClickListener {
-            main_container.removeView(layout_day)
-            if (listOfTextViewRadioGroup.size == 4) {
-                addDayBtn?.visibility = View.VISIBLE
-            }
-        }
+        layout_timetable.id = layout_id
+        layout_timetable.orientation = LinearLayout.VERTICAL
+        layout_timetable.layoutParams = layout_params
 
         // Day TextView
 
@@ -284,7 +304,7 @@ class AddSubjectFragment : Fragment() {
         tv_day.setTextColor(Color.BLACK)
         tv_day.text = "Día"
 
-        // RadioGroup and RadioButtons
+        // Days RadioGroup and RadioButtons
 
         val days = arrayOf("L", "M", "Mi", "J", "V")
 
@@ -295,9 +315,6 @@ class AddSubjectFragment : Fragment() {
         val rg_days_params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT)
         rg_days_params.setMargins((15*dp).toInt(), (15*dp).toInt() , 0, 0)
         rg_days.layoutParams = rg_days_params
-
-        val textViewRadioGroup = TextViewRadioGroup(tv_day, rg_days)
-        listOfTextViewRadioGroup.add(textViewRadioGroup)
 
         val rb_day_params = LinearLayout.LayoutParams((48*dp).toInt(), (48*dp).toInt())
         rb_day_params.setMargins((15*dp).toInt(), 0, 0, 0)
@@ -339,25 +356,25 @@ class AddSubjectFragment : Fragment() {
 
         // Start Time TextView Time Picker
 
-        val start_time_picker = TextView(context)
-        val start_time_picker_id = View.generateViewId()
-        start_time_picker.id = start_time_picker_id
-        val start_time_picker_params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (50*dp).toInt())
-        start_time_picker_params.setMargins((30*dp).toInt(), (15*dp).toInt() , (30*dp).toInt(), 0)
-        start_time_picker.layoutParams = start_time_picker_params
-        start_time_picker.setBackgroundColor(ContextCompat.getColor(activity!!.applicationContext, R.color.colorLightGray))
-        start_time_picker.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_start_time, 0, 0,0)
-        start_time_picker.compoundDrawablePadding = (10*dp).toInt()
-        start_time_picker.setPadding((10*dp).toInt())
-        start_time_picker.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20.toFloat())
-        start_time_picker.hint = "Ingrese la hora inicial"
+        val picker_start_time = TextView(context)
+        val picker_start_time_id = View.generateViewId()
+        picker_start_time.id = picker_start_time_id
+        val picker_start_time_params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (50*dp).toInt())
+        picker_start_time_params.setMargins((30*dp).toInt(), (15*dp).toInt() , (30*dp).toInt(), 0)
+        picker_start_time.layoutParams = picker_start_time_params
+        picker_start_time.setBackgroundColor(ContextCompat.getColor(activity!!.applicationContext, R.color.colorLightGray))
+        picker_start_time.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_start_time, 0, 0,0)
+        picker_start_time.compoundDrawablePadding = (10*dp).toInt()
+        picker_start_time.setPadding((10*dp).toInt())
+        picker_start_time.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20.toFloat())
+        picker_start_time.hint = "Ingrese la hora inicial"
 
-        start_time_picker.setOnClickListener{
+        picker_start_time.setOnClickListener{
             val cal = Calendar.getInstance()
             val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
                 cal.set(Calendar.HOUR_OF_DAY, hour)
                 cal.set(Calendar.MINUTE, minute)
-                start_time_picker.setText(SimpleDateFormat("HH:mm").format(cal.time))
+                picker_start_time.setText(SimpleDateFormat("HH:mm").format(cal.time))
             }
             TimePickerDialog(
                 context,
@@ -367,8 +384,6 @@ class AddSubjectFragment : Fragment() {
                 false
             ).show()
         }
-
-        listOfTextViews.add(start_time_picker)
 
         // End Time TextView
 
@@ -383,25 +398,25 @@ class AddSubjectFragment : Fragment() {
 
         // End Time TextView Time Picker
 
-        val end_time_picker = TextView(context)
-        val end_time_picker_id = View.generateViewId()
-        end_time_picker.id = end_time_picker_id
-        val end_time_picker_params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (50*dp).toInt())
-        end_time_picker_params.setMargins((30*dp).toInt(), (15*dp).toInt() , (30*dp).toInt(), 0)
-        end_time_picker.layoutParams = end_time_picker_params
-        end_time_picker.setBackgroundColor(ContextCompat.getColor(activity!!.applicationContext, R.color.colorLightGray))
-        end_time_picker.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_end_time, 0, 0,0)
-        end_time_picker.compoundDrawablePadding = (10*dp).toInt()
-        end_time_picker.setPadding((10*dp).toInt())
-        end_time_picker.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20.toFloat())
-        end_time_picker.hint = "Ingrese la hora final"
+        val picker_end_time = TextView(context)
+        val picker_end_time_id = View.generateViewId()
+        picker_end_time.id = picker_end_time_id
+        val picker_end_time_params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (50*dp).toInt())
+        picker_end_time_params.setMargins((30*dp).toInt(), (15*dp).toInt() , (30*dp).toInt(), 0)
+        picker_end_time.layoutParams = picker_end_time_params
+        picker_end_time.setBackgroundColor(ContextCompat.getColor(activity!!.applicationContext, R.color.colorLightGray))
+        picker_end_time.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_end_time, 0, 0,0)
+        picker_end_time.compoundDrawablePadding = (10*dp).toInt()
+        picker_end_time.setPadding((10*dp).toInt())
+        picker_end_time.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20.toFloat())
+        picker_end_time.hint = "Ingrese la hora final"
 
-        end_time_picker.setOnClickListener{
+        picker_end_time.setOnClickListener{
             val cal = Calendar.getInstance()
             val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
                 cal.set(Calendar.HOUR_OF_DAY, hour)
                 cal.set(Calendar.MINUTE, minute)
-                end_time_picker.setText(SimpleDateFormat("HH:mm").format(cal.time))
+                picker_end_time.setText(SimpleDateFormat("HH:mm").format(cal.time))
             }
             TimePickerDialog(
                 context,
@@ -412,8 +427,6 @@ class AddSubjectFragment : Fragment() {
             ).show()
         }
 
-        listOfTextViews.add(end_time_picker)
-
         // Divider
 
         val divider: View = View(context)
@@ -422,17 +435,42 @@ class AddSubjectFragment : Fragment() {
         divider.setBackgroundColor(ContextCompat.getColor(activity!!.applicationContext, android.R.color.darker_gray))
         divider.layoutParams = divider_params
 
+        // ImageView Close
+
+        val iv_close = ImageView(context)
+        val iv_close_params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT)
+        iv_close.isClickable = true
+        iv_close_params.gravity = Gravity.RIGHT
+        iv_close_params.setMargins(0, (10*dp).toInt(), (30*dp).toInt(), 0)
+        iv_close.layoutParams = iv_close_params
+        iv_close.setBackgroundResource(R.drawable.ic_close)
+
+        // Create TimetableUI
+
+        val timetablUI = TimetableUI(tv_day, rg_days, picker_start_time, picker_end_time)
+        listOfTimetableUI.add(timetablUI)
+
+        // ImageView Close Click
+
+        iv_close.setOnClickListener {
+            main_container.removeView(layout_timetable)
+            if (listOfTimetableUI.size == 4) {
+                addTimetableBtn?.visibility = View.VISIBLE
+            }
+            listOfTimetableUI.remove(timetablUI)
+        }
+
         // Add Views
 
-        layout_day.addView(iv_close)
-        layout_day.addView(tv_day)
-        layout_day.addView(rg_days)
-        layout_day.addView(tv_start_time)
-        layout_day.addView(start_time_picker)
-        layout_day.addView(tv_end_time)
-        layout_day.addView(end_time_picker)
-        layout_day.addView(divider)
-        main_container.addView(layout_day, main_container.childCount - 1)
+        layout_timetable.addView(iv_close)
+        layout_timetable.addView(tv_day)
+        layout_timetable.addView(rg_days)
+        layout_timetable.addView(tv_start_time)
+        layout_timetable.addView(picker_start_time)
+        layout_timetable.addView(tv_end_time)
+        layout_timetable.addView(picker_end_time)
+        layout_timetable.addView(divider)
+        main_container.addView(layout_timetable, main_container.childCount - 1)
 
     }
 }

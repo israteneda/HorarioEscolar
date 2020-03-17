@@ -298,7 +298,7 @@
     </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_add_day"
+        android:id="@+id/btn_add_timetable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

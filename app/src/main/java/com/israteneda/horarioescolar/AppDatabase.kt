@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.israteneda.horarioescolar.dao.SubjectDao
+import com.israteneda.horarioescolar.dao.TimetableDao
 import com.israteneda.horarioescolar.entities.Subject
 import com.israteneda.horarioescolar.entities.Timetable
 
@@ -14,11 +15,13 @@ import com.israteneda.horarioescolar.entities.Timetable
         Subject::class,
         Timetable::class
     ),
-    version = 1
+    version = 1,
+    exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun subjectDao(): SubjectDao
+    abstract fun timetableDao(): TimetableDao
 
     companion object {
 

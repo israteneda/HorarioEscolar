@@ -8,15 +8,18 @@ import com.israteneda.horarioescolar.entities.SubjectWithTimetables
 interface SubjectDao {
 
     @Insert
-    fun insertSubject(subject: Subject)
+    fun insert(subject: Subject):Long
+
+    @Update
+    fun update(subject: Subject)
+
+    @Delete
+    fun delete(subject: Subject)
 
     @Query("SELECT * FROM Subject")
     fun getAll(): List<Subject>
 
-    @Delete
-    fun deleteSubject(subject: Subject)
-
     @Transaction
-    @Query("SELECT * FROM Subject")
-    fun getSubjectWithTimetables(): List<SubjectWithTimetables>
+    @Query("SELECT * FROM Subject WHERE id = :subjectId")
+    fun getSubjectWithTimetables(subjectId: Long): List<SubjectWithTimetables>
 }

@@ -31,7 +31,7 @@ data class Subject(
 
     val name: String,
 
-    val color: String
+    val color: Int
 )
 
 

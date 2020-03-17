@@ -1,8 +1,6 @@
 package com.israteneda.horarioescolar.entities
 
 import androidx.room.*
-import java.sql.Time
-import java.time.LocalDate
 
 @Entity(
     tableName = "Timetable",

@@ -49,4 +49,7 @@ dependencies {
 
     // ColorSheet
     implementation "dev.sasikanth:colorsheet:1.0.1"
+
+    // Kotlin Reflect
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 }
