@@ -3,12 +3,14 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+android.defaultConfig.vectorDrawables.useSupportLibrary = true
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.israteneda.horarioescolar"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -43,4 +45,8 @@ dependencies {
 
     // Room
     implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
+    // ColorSheet
+    implementation "dev.sasikanth:colorsheet:1.0.1"
 }

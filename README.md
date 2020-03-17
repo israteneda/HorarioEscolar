@@ -10,12 +10,35 @@
 * [Bottom Navigation with Kotlin](https://medium.com/@smarrerof/c%C3%B3mo-usar-la-bottomnavigationview-en-android-usando-kotlin-ae8961aae92e)
 * [Room Android](https://developer.android.com/training/data-storage/room)
 * [Room Relations](https://medium.com/androiddevelopers/database-relations-with-room-544ab95e4542)
+* [Custom Radio Button](https://stackoverflow.com/questions/19163628/adding-custom-radio-buttons-in-android)
+* [Create RadioGroup Programmatically](https://stackoverflow.com/questions/19929295/creating-radiogroup-programmatically)
+* [Room Tips and Tricks](https://spin.atomicobject.com/2019/04/01/android-room-tips/)
+* [One to many relation in room](https://stackoverflow.com/questions/48443760/one-to-many-relation-in-room)
+* [Android Room Basic Example](https://www.youtube.com/watch?v=RCLNkSIQQaw)
+
+## Librerías utilizadas
+
+* [Color Sheet](https://github.com/msasikanth/ColorSheet)
 
 ## Cómo Contribuir
 
 * Realiza un fork del projecto
 * Clona tu proyecto forkeado desde Android Studio
 * Crea una rama con tus cambios, y envía un pull request :)
+
+## TODO
+
+✅ Construir el template del layout para agregar Día del horario\
+✅ Añadir por programación más horarios en una materia  
+📌 Añadir ids a los elementos dinámicos en `AddSubjectFRagment.kt`\
+📌 Crear materia con un horario y mostrar en la pantalla Horario\
+📌 Revisar los colores del tema Material Components y establecer los de la interfaz gráfica\
+📌 Crear valores estándar (strings, values, etc) para usar en las vistas\
+📌 Crear CRUD de materias y horarios\
+📌 Conectar Firebase\
+📌 Organizar layouts\
+📌 Refactorizar `AddSubjectFRagment.kt`\
+📌 Añadir notificaciones locales de las clases
 
 ## Diagrama de Clases
 

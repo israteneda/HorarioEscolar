@@ -5,11 +5,20 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.util.*
 
-@Entity
+@Entity(tableName = "Task")
 data class Task(
-    @PrimaryKey val taskId: Long,
-    @ColumnInfo(name = "subject") val taskSubjectId: Long,
-    @ColumnInfo(name = "title") val title: String,
-    @ColumnInfo(name = "description") val description: String,
-    @ColumnInfo(name = "deadline") val deadline: Date
+
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    val taskId: Long,
+
+    @ColumnInfo(name = "subject_id")
+    val subjectId: Long,
+
+    val title: String,
+
+    val description: String,
+
+    val deadline: String
+
 )

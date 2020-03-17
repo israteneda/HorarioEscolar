@@ -30,7 +30,7 @@
                 android:textColor="@android:color/white"></TextView>
 
             <TextView
-                android:id="@+id/tv_end_time"
+                android:id="@+id/tv_end_time_picker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="09:00"

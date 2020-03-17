@@ -4,9 +4,16 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(tableName = "Teacher")
 data class Teacher(
-    @PrimaryKey val teacherId: Long,
-    @ColumnInfo(name = "name") val name: String,
-    @ColumnInfo(name = "cell_number") val cellNumber: String
+
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    val teacherId: Long,
+
+    val name: String,
+
+    @ColumnInfo(name = "cell_number")
+    val cellNumber: String
+
 )

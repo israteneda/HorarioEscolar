@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.israteneda.horarioescolar.ListAdapter
 import com.israteneda.horarioescolar.R
+import com.israteneda.horarioescolar.entities.Day
 import com.israteneda.horarioescolar.entities.Timetable
 import kotlinx.android.synthetic.main.fragment_timetable.*
 
@@ -13,8 +14,8 @@ import kotlinx.android.synthetic.main.fragment_timetable.*
 class TimetableFragment : Fragment() {
 
     private val mTimetables = listOf(
-        Timetable(1,1, "Lunes", 13.0, 14.0),
-        Timetable(2, 1, "Miercoles", 13.0, 14.0)
+        Timetable(1,1, Day(0,"Lunes"), "07:00", "09:00"),
+        Timetable(2, 1, Day(2,"Miercoles"), "07:00", "09:00")
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
