@@ -4,7 +4,6 @@ import androidx.room.Embedded
 import androidx.room.Relation
 
 data class SubjectWithTimetables(
-
     @Embedded
     var subject: Subject,
 

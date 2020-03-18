@@ -35,15 +35,6 @@ class MainActivity: AppCompatActivity() {
 
         db = AppDatabase.getAppDatabase(this)
 
-//        var subjectId = db.subjectDao().insert(Subject(0,"Matemáticas", "#FFFFFF"))
-//        db.timetableDao().insertAll(listOf(
-//            Timetable(0, subjectId, Day.LUNES,"07:00", "09:00"),
-//            Timetable(0, subjectId, Day.MARTES,"07:00", "09:00"),
-//            Timetable(0, subjectId, Day.MIERCOLES,"07:00", "09:00")
-//        ))
-
-//        Log.i(TAG, db.subjectDao().getSubjectWithTimetables(6).toString())
-
         // UI Elements
 
         val bottomNav: BottomNavigationView  = findViewById(R.id.bottom_navigation)

@@ -4,19 +4,20 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.israteneda.horarioescolar.ListAdapter
+import com.israteneda.horarioescolar.AppDatabase
+import com.israteneda.horarioescolar.adapters.ListAdapter
 import com.israteneda.horarioescolar.R
 import com.israteneda.horarioescolar.entities.Day
 import com.israteneda.horarioescolar.entities.Timetable
 import kotlinx.android.synthetic.main.fragment_timetable.*
 
+// TODO: Revisar porque el fragment no respeta el Navigation Bar
+// TODO: Desaparecer el Navigation Bar en crear materia
+// TODO: Colocar los campos de la materia y ver como mostrar todos los días en el recycleview
 
 class TimetableFragment : Fragment() {
 
-    private val mTimetables = listOf(
-        Timetable(1,1, Day(0,"Lunes"), "07:00", "09:00"),
-        Timetable(2, 1, Day(2,"Miercoles"), "07:00", "09:00")
-    )
+    private lateinit var db: AppDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,13 +38,17 @@ class TimetableFragment : Fragment() {
             // set a LinearLayoutManager to handle Android
             // RecyclerView behavior
             layoutManager = LinearLayoutManager(activity)
-            // set the custom adapter to the RecyclerView
+
+            db = AppDatabase.getAppDatabase(context!!.applicationContext)
+
+            val mTimetables = db.timetableDao().getTimetablesByDay(2)
+
+                // set the custom adapter to the RecyclerView
             adapter = ListAdapter(mTimetables)
         }
     }
 
     companion object {
-        fun newInstance() =
-            TimetableFragment()
+        fun newInstance() = TimetableFragment()
     }
 }

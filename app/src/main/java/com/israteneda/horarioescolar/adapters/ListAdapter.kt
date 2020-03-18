@@ -1,8 +1,9 @@
-package com.israteneda.horarioescolar
+package com.israteneda.horarioescolar.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.israteneda.horarioescolar.SubjectViewHolder
 import com.israteneda.horarioescolar.entities.Timetable
 
 class ListAdapter(private val list: List<Timetable>)

@@ -1,10 +1,14 @@
 package com.israteneda.horarioescolar.dao
 
 import androidx.room.*
+import com.israteneda.horarioescolar.entities.Day
 import com.israteneda.horarioescolar.entities.Timetable
 
 @Dao
 interface TimetableDao {
+
+    @Query("SELECT * FROM Timetable WHERE idx = :idxDay")
+    fun getTimetablesByDay(idxDay: Int): List<Timetable>
 
     @Insert
     fun insert(timetable: Timetable)

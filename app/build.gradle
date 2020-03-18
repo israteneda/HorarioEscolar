@@ -52,4 +52,7 @@ dependencies {
 
     // Kotlin Reflect
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+
+    // Android Debug Database
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
 }

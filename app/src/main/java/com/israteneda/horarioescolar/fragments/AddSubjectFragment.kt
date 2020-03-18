@@ -180,9 +180,9 @@ class AddSubjectFragment : Fragment() {
         // Add Day
 
         addTimetableBtn?.setOnClickListener {
-            if (listOfTimetableUI.size < 4){
+            if (listOfTimetableUI.size < 5){
                 addTimetable()
-            } else if (listOfTimetableUI.size == 4) {
+            } else if (listOfTimetableUI.size == 5) {
                 addTimetableBtn?.visibility = View.GONE
             }
         }
@@ -457,7 +457,7 @@ class AddSubjectFragment : Fragment() {
 
         iv_close.setOnClickListener {
             main_container.removeView(layout_timetable)
-            if (listOfTimetableUI.size == 4) {
+            if (listOfTimetableUI.size == 5) {
                 addTimetableBtn?.visibility = View.VISIBLE
             }
             listOfTimetableUI.remove(timetablUI)
