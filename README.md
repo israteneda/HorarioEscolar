@@ -16,9 +16,10 @@
 * [One to many relation in room](https://stackoverflow.com/questions/48443760/one-to-many-relation-in-room)
 * [Android Room Basic Example](https://www.youtube.com/watch?v=RCLNkSIQQaw)
 
-## Librerías utilizadas
+## Recursos utilizados
 
 * [Color Sheet](https://github.com/msasikanth/ColorSheet)
+* Launcher icon made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
 
 ## Cómo Contribuir
 
