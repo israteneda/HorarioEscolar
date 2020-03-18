@@ -9,6 +9,7 @@ import android.util.Log
 import android.util.TypedValue
 import android.view.*
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.view.setPadding
@@ -17,8 +18,11 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import com.israteneda.horarioescolar.AppDatabase
+import com.israteneda.horarioescolar.MainActivity
 import com.israteneda.horarioescolar.R
+import com.israteneda.horarioescolar.Util
 import com.israteneda.horarioescolar.entities.Day
 import com.israteneda.horarioescolar.entities.Subject
 import com.israteneda.horarioescolar.entities.Timetable
@@ -146,14 +150,14 @@ class AddSubjectFragment : Fragment() {
             val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
                 cal.set(Calendar.HOUR_OF_DAY, hour)
                 cal.set(Calendar.MINUTE, minute)
-                startTime.setText(SimpleDateFormat("HH:mm").format(cal.time))
+                startTime.setText(SimpleDateFormat("hh:mm a").format(cal.time))
             }
             TimePickerDialog(
                 context,
                 timeSetListener,
                 cal.get(Calendar.HOUR_OF_DAY),
                 cal.get(Calendar.MINUTE),
-                false
+                true
             ).show()
         }
 
@@ -162,14 +166,14 @@ class AddSubjectFragment : Fragment() {
             val timeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
                 cal.set(Calendar.HOUR_OF_DAY, hour)
                 cal.set(Calendar.MINUTE, minute)
-                endTime.setText(SimpleDateFormat("HH:mm").format(cal.time))
+                endTime.setText(SimpleDateFormat("hh:mm a").format(cal.time))
             }
             TimePickerDialog(
                 context,
                 timeSetListener,
                 cal.get(Calendar.HOUR_OF_DAY),
                 cal.get(Calendar.MINUTE),
-                false
+                true
             ).show()
         }
 
@@ -266,12 +270,11 @@ class AddSubjectFragment : Fragment() {
                             listOfTimetableUI.get(i).tv_end_time.text.toString()
                         ))
                     }
-                    Toast.makeText(context, "Materia Creada", Toast.LENGTH_LONG).show()
+                    Snackbar.make(view, "Materia creada exitosamente", Snackbar.LENGTH_LONG).show()
                     Log.i(tag, db.subjectDao().getSubjectWithTimetables(subjectId).toString())
+                    Util.openFragment((activity as AppCompatActivity), TimetableFragment.newInstance())
                 }
             }
-
-//            Snackbar.make(view, errorString, Snackbar.LENGTH_SHORT).show()
         }
 
 

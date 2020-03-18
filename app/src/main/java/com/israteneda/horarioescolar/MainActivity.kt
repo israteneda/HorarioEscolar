@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.israteneda.horarioescolar.Util.Companion.openFragment
 import com.israteneda.horarioescolar.fragments.*
 
 
@@ -47,7 +48,7 @@ class MainActivity: AppCompatActivity() {
 
         val bottomNav: BottomNavigationView  = findViewById(R.id.bottom_navigation)
         val fab: FloatingActionButton = findViewById(R.id.btn_floating);
-        openFragment(HomeFragment.newInstance())
+        openFragment(this, HomeFragment.newInstance())
         fab.hide()
 
         // Bottom Navigation
@@ -57,13 +58,13 @@ class MainActivity: AppCompatActivity() {
             when(item.itemId) {
                 R.id.nav_home -> {
                     val fragment = HomeFragment.newInstance()
-                    openFragment(fragment)
+                    openFragment(this, fragment)
                     fab.hide()
                     true
                 }
                 R.id.nav_tasks -> {
                     val fragment = TaskFragment.newInstance()
-                    openFragment(fragment)
+                    openFragment(this, fragment)
                     fab.setImageResource(R.drawable.ic_note_add)
                     fab.show()
                     fab.setOnClickListener {
@@ -73,32 +74,25 @@ class MainActivity: AppCompatActivity() {
                 }
                 R.id.nav_timetable -> {
                     val fragment = TimetableFragment.newInstance()
-                    openFragment(fragment)
+                    openFragment(this, fragment)
                     fab.setImageResource(R.drawable.ic_timetable_add)
                     fab.show()
                     fab.setOnClickListener {
                         val fragment = AddSubjectFragment.newInstance()
-                        openFragment(fragment)
+                        openFragment(this, fragment)
                         fab.hide()
                     }
                     true
                 }
                 R.id.nav_profile -> {
                     val fragment = ProfileFragment.newInstance()
-                    openFragment(fragment)
+                    openFragment(this, fragment)
                     fab.hide()
                     true
                 }
                 else -> false
             }
         }
-    }
-
-    private fun openFragment(fragment: Fragment) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.fragment_container, fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
     }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
