@@ -1,3 +1,12 @@
+# Horario Escolar
+
+Aplicación en Android para gestionar el horario de clases de la U
+
+&nbsp;&nbsp;<img src="static/inicio.png" alt="inicio" width="150" height="300"/>&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="static/tareas.png" alt="tareas" width="150" height="300"/>&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="static/horario.png" alt="horario" width="150" height="300"/>&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="static/perfil.png" alt="perfil" width="150" height="300"/>
+
 ## Interfaz Gráfica
 
 * [Campus Planner UI on Figma](https://www.figma.com/file/gARKgly3R3RYlXnSzL0RFS/CampusPlanner?node-id=0%3A1) by Mohammad Firdaus
@@ -29,8 +38,11 @@
 
 ## TODO
 
+
 ✅ Construir el template del layout para agregar Día del horario\
 ✅ Añadir por programación más horarios en una materia  
+📌 Añadir Swap entre fragments estilo WhatsApp  
+📌 Arreglar el espacio que ocupa el bottom navigation, limitar el fragment  
 📌 Añadir ids a los elementos dinámicos en `AddSubjectFRagment.kt`\
 📌 Crear materia con un horario y mostrar en la pantalla Horario\
 📌 Revisar los colores del tema Material Components y establecer los de la interfaz gráfica\
